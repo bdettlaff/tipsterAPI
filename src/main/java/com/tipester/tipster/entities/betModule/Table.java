@@ -3,6 +3,5 @@ package com.tipester.tipster.entities.betModule;
 import javax.persistence.Entity;
 
 @Entity
-public class Bet {
+public class Table {
 }
-
