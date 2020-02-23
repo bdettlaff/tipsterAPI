@@ -20,6 +20,8 @@ public class ChangeLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long changeLogId;
 
+    private String title;
+
     private String date;
 
     private String content;
