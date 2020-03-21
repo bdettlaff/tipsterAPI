@@ -26,7 +26,7 @@ public class ChangeLogEndpoint {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/changelog/add")
-    public ResponseEntity<ChangeLog> addTask(@RequestBody AddChangeLog addChangeLog){
+    public ResponseEntity<ChangeLog> addChangeLog(@RequestBody AddChangeLog addChangeLog){
         changeLogService.addChangeLog(addChangeLog);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
