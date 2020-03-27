@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChangeLogService {
@@ -54,7 +56,35 @@ public class ChangeLogService {
         return changeLogWithDates;
     }
 
+    public List<ChangeLogWithDate> getLastThreeChangeLogs(){
+        List<ChangeLog> changeLogList = changeLogRepository.findAll();
+        List<ChangeLogWithDate> changeLogWithDates = new ArrayList<>();
+        List<ChangeLogWithDate> resultList;
+
+        for(ChangeLog changeLog : changeLogList){
+            ChangeLogWithDate changeLogWithDate = ChangeLogWithDate.builder()
+                    .content(changeLog.getContent())
+                    .title(changeLog.getTitle())
+                    .date(changeLog.getDate())
+                    .build();
+
+            changeLogWithDates.add(changeLogWithDate);
+        }
+
+        resultList = changeLogWithDates.stream().sorted(Comparator.comparing(ChangeLogWithDate::getDate)).collect(Collectors.toList());
+
+        int size = resultList.size();
+        changeLogWithDates = new ArrayList<>();
+
+        changeLogWithDates.add(0,resultList.get(size-1));
+        changeLogWithDates.add(1,resultList.get(size-2));
+        changeLogWithDates.add(2,resultList.get(size-3));
+
+        return changeLogWithDates;
+    }
+
     public void deleteChangeLog(Long changeLogId){
         changeLogRepository.deleteById(changeLogId);
     }
+
 }

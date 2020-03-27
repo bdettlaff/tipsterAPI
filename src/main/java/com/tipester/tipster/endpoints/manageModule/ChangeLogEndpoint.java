@@ -38,4 +38,9 @@ public class ChangeLogEndpoint {
         changeLogService.deleteChangeLog(changeLogId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/changelog/get/last/three")
+    public ResponseEntity<List<ChangeLogWithDate>> getLastThreeChangeLogs() {
+        return new ResponseEntity<>(changeLogService.getLastThreeChangeLogs(), HttpStatus.OK);
+    }
 }
